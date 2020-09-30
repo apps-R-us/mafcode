@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:mafcode/components/rounded_button.dart';
 import 'package:mafcode/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mafcode/screens/forgot_password_screen.dart';
+import 'package:mafcode/screens/home_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const id = 'login_screen';
+import 'forgot_password_screen.dart';
+import 'forgot_password_screen.dart';
 
+class LoginScreen extends StatefulWidget {
+  static const String id = 'login_screen';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
+  final _auth = FirebaseAuth.instance;
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,24 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              /*Flexible(
-                child: Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 200.0,
-                    child: Image.asset('images/logo.png'),
-                  ),
-                ),
-              ),*/
               SizedBox(
                 height: 48.0,
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
+                style: TextStyle(color: Colors.black),
                 decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Email Address'),
+                kTextFieldDecoration.copyWith(hintText: 'Email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -50,8 +52,12 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 obscureText: true,
                 textAlign: TextAlign.center,
-                onChanged: (value) {},
-                decoration: kTextFieldDecoration.copyWith(hintText: 'password'),
+                onChanged: (value) {
+                  password = value;
+                },
+                style: TextStyle(color: Colors.black),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Password'),
               ),
               SizedBox(
                 height: 24.0,
@@ -60,17 +66,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: 'Log In',
                 colour: Color(0xff295883),
                 onPressed: () async {
-                  setState(() {});
+                  setState(() {
+                    showSpinner = true;
+                  });
+                  try {
+                    final user = await _auth.signInWithEmailAndPassword(
+                        email: email, password: password);
+                    if (user != null) {
+                      Navigator.pushNamed(context, HomeScreen.id);
+                    }
+
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
                 },
-              ),
-              SizedBox(
-                height: 30,
               ),
               Container(
                 alignment: Alignment.center,
                 child: FlatButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(ForgotPasswordScreen.id),
+                  onPressed: () => Navigator.pushNamed(context, ForgetPassword.id),
                   padding: EdgeInsets.only(right: 0.0),
                   child: Text(
                     'Forgot Password?',
@@ -79,30 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
           ),
         ),
       ),

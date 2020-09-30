@@ -3,6 +3,8 @@ import 'package:mafcode/components/rounded_button.dart';
 import 'package:mafcode/screens/signup_screen.dart';
 import 'package:mafcode/screens/login_screen.dart';
 
+import 'signup_screen.dart';
+
 class WelcomeScreen extends StatefulWidget {
   static const id = 'welcome_screen';
 
@@ -100,7 +102,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 title: 'Register',
                 colour: Color(0xff295883),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignUpScreen.id);
+                  Navigator.of(context).pushNamed(RegistrationScreen.id);
                 },
               ),
             ],

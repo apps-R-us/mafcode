@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'screens/forgot_password_screen.dart';
 import 'screens/home_screen.dart';
 import 'package:mafcode/screens/submit_screen.dart';
 import 'package:mafcode/screens/map_screen.dart';
@@ -28,9 +29,9 @@ class MyApp extends StatelessWidget {
         MapScreen.id: (context) => MapScreen(),
         SettingsScreen.id: (context) => SettingsScreen(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
-        SignUpScreen.id: (context) => SignUpScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
         LoginScreen.id: (context) => LoginScreen(),
-        ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
+        ForgetPassword.id: (context) => ForgetPassword(),
       },
     );
   }

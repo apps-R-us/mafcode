@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mafcode/components/rounded_button.dart';
 import 'package:mafcode/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mafcode/screens/home_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class SignUpScreen extends StatefulWidget {
-  static const id = 'signup_screen';
-
+class RegistrationScreen extends StatefulWidget {
+  static const String id = 'registration_screen';
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
+  String email;
+  String password;
 
   @override
   Widget build(BuildContext context) {
@@ -25,33 +29,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              /*Flexible(
-                child: Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 200.0,
-                    child: Image.asset('images/logo.png'),
-                  ),
-                ),
-              ),*/
+              TextField(
+                keyboardType: TextInputType.emailAddress,
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  email = value;
+                },
+                style: TextStyle(color: Colors.black),
+                decoration:
+                kTextFieldDecoration.copyWith(hintText: 'Name'),
+              ),
               SizedBox(
-                height: 48.0,
+                height: 24.0,
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
-                onChanged: (value) {},
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Name'),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                obscureText: true,
-                textAlign: TextAlign.center,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  email = value;
+                },
+                style: TextStyle(color: Colors.black),
                 decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Email Address'),
+                kTextFieldDecoration.copyWith(hintText: 'Email'),
               ),
               SizedBox(
                 height: 24.0,
@@ -59,8 +58,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextField(
                 obscureText: true,
                 textAlign: TextAlign.center,
-                onChanged: (value) {},
-                decoration: kTextFieldDecoration.copyWith(hintText: 'password'),
+                onChanged: (value) {
+                  password = value;
+                },
+                style: TextStyle(color: Colors.black),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Password'),
               ),
               SizedBox(
                 height: 24.0,
@@ -68,7 +71,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextField(
                 obscureText: true,
                 textAlign: TextAlign.center,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  password = value;
+                },
+                style: TextStyle(color: Colors.black),
                 decoration: kTextFieldDecoration.copyWith(
                     hintText: 'Confirmed password'),
               ),
@@ -76,10 +82,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 24.0,
               ),
               RoundedButton(
-                title: 'Register',
+                title: 'Sign Up',
                 colour: Color(0xff295883),
                 onPressed: () async {
-                  setState(() {});
+                  setState(() {
+                    showSpinner = true;
+                  });
+                  try {
+                    final newUser = await _auth.createUserWithEmailAndPassword(
+                        email: email, password: password);
+                    if (newUser != null) {
+                      Navigator.pushNamed(context, HomeScreen.id);
+                    }
+
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
                 },
               ),
             ],

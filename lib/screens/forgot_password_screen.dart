@@ -3,14 +3,13 @@ import 'package:mafcode/components/rounded_button.dart';
 import 'package:mafcode/constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
-  static const id = 'forgot_password_screen';
-
+class ForgetPassword extends StatefulWidget {
+  static const String id = 'forger_password';
   @override
-  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+  _ForgetPasswordState createState() => _ForgetPasswordState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgetPasswordState extends State<ForgetPassword> {
   bool showSpinner = false;
 
   @override
@@ -31,9 +30,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 TextField(
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+
+                  },
                   decoration:
-                      kTextFieldDecoration.copyWith(hintText: 'Enter Email '),
+                  kTextFieldDecoration.copyWith(hintText: 'Enter Email '),
                 ),
                 SizedBox(
                   height: 24.0,

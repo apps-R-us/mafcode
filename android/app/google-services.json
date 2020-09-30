@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "382837991434",
+    "firebase_url": "https://mafcode1.firebaseio.com",
+    "project_id": "mafcode1",
+    "storage_bucket": "mafcode1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382837991434:android:aef5cdd8c09eb85fc217f3",
+        "android_client_info": {
+          "package_name": "com.example.tarekk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382837991434-6qrls1k7qf2104m7nn113ucvl99a1pe9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoScoiG3VUoPg2qbSl86LvYHmwM59ChoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382837991434-6qrls1k7qf2104m7nn113ucvl99a1pe9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
